@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@zeit/next-css": "^1.0.1",
     "antd": "^4.16.13",
     "babel-plugin-import": "^1.13.3",
