@@ -1,8 +1,8 @@
 /*
  * @Author: shuyang
  * @Date: 2021-10-25 21:17:57
- * @LastEditTime: 2021-10-25 23:08:49
- * @FilePath: \my_blog\components\Header.tsx
+ * @LastEditTime: 2021-10-26 22:23:46
+ * @FilePath: \my_blog\components\Header\Header.tsx
  */
 import {
   HomeOutlined,
@@ -10,13 +10,28 @@ import {
   SmileOutlined,
 } from "@ant-design/icons";
 import { Col, Menu, Row } from "antd";
-import React, { useEffect, useState } from "react";
-React.useLayoutEffect = React.useEffect;
-import "../styles/components/header.scss";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+// React.useLayoutEffect = React.useEffect;
+import style from "../Header/Header.module.scss";
 // const [current, setcurrent] = useState("homePage");
 const handleClick = () => {};
+const canUseDOM: boolean = !!(
+  typeof window !== "undefined" &&
+  typeof window.document !== "undefined" &&
+  typeof window.document.createElement !== "undefined"
+);
+
+const useIsomorphicLayoutEffect = canUseDOM ? useLayoutEffect : useEffect;
+function isBrowser() {
+  return !!(
+    typeof window !== "undefined" &&
+    window.document &&
+    window.document.createElement
+  );
+}
 function Header() {
-  const [current, setcurrent] = useState("homePage");
+  const [current, setcurrent] = useState<any>(isBrowser() && "homePage");
+
   return (
     <div className="header">
       <Row justify="center">
@@ -49,3 +64,4 @@ function Header() {
 }
 export default Header;
 // https://stackoverflow.com/questions/60941853/next-js-global-css-cannot-be-imported-from-files-other-than-your-custom-app
+//https://github.com/ant-design/ant-design/issues/30396
