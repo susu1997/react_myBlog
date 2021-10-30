@@ -1,17 +1,19 @@
 /*
  * @Author: shuyang
  * @Date: 2021-10-24 20:42:16
- * @LastEditTime: 2021-10-28 23:15:13
+ * @LastEditTime: 2021-10-30 14:18:03
  * @FilePath: \my_blog\pages\index.tsx
  */
 import type { NextPage } from "next";
 import Head from "next/head";
-import style from "../styles/pages/comm.module.scss";
-import indexCss from "../styles/pages/index.module.scss";
-import { Row, Col, List, Typography } from "antd";
-import Header from "../components/Header/Header";
+import { Row, Col, List } from "antd";
+import Header from "../components/Header";
+import Author from "../components/Author";
+import Advert from "../components/Advert";
+
 import { useState } from "react";
 import { ScheduleOutlined ,FireOutlined,FolderOutlined} from "@ant-design/icons";
+import Footer from "../components/Footer";
 const Home: NextPage = () => {
   const [mylist, setMylist] = useState([
     {
@@ -42,29 +44,31 @@ const Home: NextPage = () => {
         <title>Create Next App</title>
       </Head>
       <Header></Header>
-      <Row className={style.comm_main} justify="center">
-        <Col className={style.comm_left} xs={24} sm={24} md={16} lg={18} xl={14}>
+      <Row className="comm_main" justify="center">
+        <Col className="comm_left" xs={24} sm={24} md={16} lg={18} xl={14}>
           <List
             header={<div>Header</div>}
             itemLayout="vertical"
             dataSource={mylist}
             renderItem={(item) => (
               <List.Item>
-                <div className={indexCss.list_title}>{item.title}</div>
-                <div className={indexCss.list_icon}>
+                <div className="list_title">{item.title}</div>
+                <div className="list_icon">
                   <span><ScheduleOutlined /> 2021-10-28</span>
                   <span><FolderOutlined /> 视频教程</span>
                   <span><FireOutlined /> 5989人</span>
                 </div>
-                <div className= {indexCss.list_context}>{item.context}</div>
+                <div className="list_context" >{item.context}</div>
               </List.Item>
             )}
           />
         </Col>
-        <Col className={style.comm_right} xs={0} sm={0} md={7} lg={5} xl={4}>
-          右侧
+        <Col className= "comm_right" xs={0} sm={0} md={7} lg={5} xl={4}>
+         <Author />
+         <Advert />
         </Col>
       </Row>
+      <Footer />
     </div>
   );
 };
