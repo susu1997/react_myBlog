@@ -1,8 +1,8 @@
 /*
  * @Author: shuyang
  * @Date: 2021-10-24 20:42:16
- * @LastEditTime: 2021-11-04 21:47:24
- * @FilePath: \nextJs_Blog\react_myBlog\pages\index.tsx
+ * @LastEditTime: 2021-11-06 15:15:28
+ * @FilePath: \react_myBlog\pages\index.tsx
  */
 import type { NextPage } from "next";
 import Head from "next/head";
@@ -15,8 +15,36 @@ import Author from "../components/Author";
 import Advert from "../components/Advert";
 import Footer from "../components/Footer";
 import axios from "axios";
+// @ts-ignore
+import { marked} from 'marked'
+import hljs from 'highlight.js'
+import 'highlight.js/styles/monokai-sublime.css'
+
 import servicePath from '../config/apiUrl'
+import Tocify from "../components/tocify";
 const Home: NextPage = (list: any) => {
+  const tocify = new Tocify()
+  const renderer = new marked.Renderer()
+    // ### jishupang
+    // renderer.heading = function(text:any,level:any,raw:any) {
+    //   const anchor = tocify.add(text, level)
+    //   return `<a id = "${anchor}" href="#${anchor}" class="anchor-fix"><h${level}>${text}</h${level}></a>\n`
+    // }
+    // console.log('renderer', renderer)
+    
+    marked.setOptions({
+      renderer: renderer,
+      gfm: true,
+      pedantic: false,
+      sanitize: false,
+      tables: true,
+      breaks: false,
+      smartList: true,
+      highlight:function (code:any) {
+        return hljs.highlightAuto(code).value
+      }
+    })
+    // let html = marked( props.article_content)
   console.log('s')
   const [mylist, setMylist] = useState([
     ...list.data
@@ -46,7 +74,10 @@ const Home: NextPage = (list: any) => {
                   <span><FolderOutlined /> { item.typeName}</span>
                   <span><FireOutlined /> { item.view_count}</span>
                 </div>
-                <div className="list_context" >{item.introduce}</div>
+                <div className="list_context" dangerouslySetInnerHTML = {{__html:marked(item.introduce)} }>
+                  
+                  {/* {item.introduce} */}
+                </div>
               </List.Item>
             )}
           />
